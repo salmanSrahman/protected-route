@@ -5,13 +5,16 @@ import CustomLink from "../CustomLink/CustomLink";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import app from "../../firebase.Config";
 
 const auth = getAuth(app);
 
 const Header = () => {
   const [user] = useAuthState(auth);
+  const handleSignOut = () => {
+    signOut(auth).then(() => {});
+  };
 
   return (
     <div>
@@ -33,7 +36,7 @@ const Header = () => {
               <CustomLink to="/register">Register</CustomLink>
               <span className="text-light">{user && user.displayName}</span>
               {user?.uid ? (
-                <Button variant="danger" className="ms-2 lh-5" size="sm">
+                <Button variant="danger" className="ms-2 lh-5" size="sm" onClick={handleSignOut}>
                   Sign Out
                 </Button>
               ) : (
