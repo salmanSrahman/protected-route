@@ -1,11 +1,18 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
-import { Container, Nav } from "react-bootstrap";
+import { Button, Container, Nav } from "react-bootstrap";
 import CustomLink from "../CustomLink/CustomLink";
 import { Link } from "react-router-dom";
-import './Header.css'
+import "./Header.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "firebase/auth";
+import app from "../../firebase.Config";
+
+const auth = getAuth(app);
 
 const Header = () => {
+  const [user] = useAuthState(auth);
+
   return (
     <div>
       <Navbar bg="dark" expand="lg">
@@ -24,7 +31,14 @@ const Header = () => {
               <CustomLink to="/products">Products</CustomLink>
               <CustomLink to="/order">Order</CustomLink>
               <CustomLink to="/register">Register</CustomLink>
-              <CustomLink to="/login">Login</CustomLink>
+              <span className="text-light">{user && user.displayName}</span>
+              {user?.uid ? (
+                <Button variant="danger" className="ms-2 lh-5" size="sm">
+                  Sign Out
+                </Button>
+              ) : (
+                <CustomLink to="/login">Login</CustomLink>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

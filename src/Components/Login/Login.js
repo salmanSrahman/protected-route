@@ -1,11 +1,21 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { getAuth } from "firebase/auth";
+import app from "../../firebase.Config";
+
+const auth = getAuth(app);
 
 const Login = () => {
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
+
   return (
     <Container>
       <div className="w-50 mx-auto mt-5">
+        <Button className="my-3" onClick={() => signInWithGoogle()}>
+          Google Sign In
+        </Button>
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
