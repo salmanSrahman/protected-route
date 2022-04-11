@@ -36,7 +36,12 @@ const Header = () => {
               <CustomLink to="/register">Register</CustomLink>
               <span className="text-light">{user && user.displayName}</span>
               {user?.uid ? (
-                <Button variant="danger" className="ms-2 lh-5" size="sm" onClick={handleSignOut}>
+                <Button
+                  variant="danger"
+                  className="ms-2 lh-5"
+                  size="sm"
+                  onClick={handleSignOut}
+                >
                   Sign Out
                 </Button>
               ) : (
